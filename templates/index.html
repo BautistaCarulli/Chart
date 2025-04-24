@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title> B-C Chart Generator</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Responsive Chart Generator</h1>
+        <!-- Form for generating the chart -->
+        <form method="POST" action="/generate_chart" target="chart-frame">
+            <div class="form-group">
+                <label for="function">Function:</label>
+                <select id="function" name="function" required>
+                    <option value="sin">Sine</option>
+                    <option value="cos">Cosine</option>
+                    <option value="tan">Tangent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="start">Start:</label>
+                <input type="number" id="start" name="start" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="end">End:</label>
+                <input type="number" id="end" name="end" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="color">Line Color:</label>
+                <input type="color" id="color" name="color" value="#4fc3f7">
+            </div>
+            <div class="form-group">
+                <label for="chart-title">Chart Title:</label>
+                <input type="text" id="chart-title" name="chart_title" placeholder="Enter chart title">
+            </div>
+            <button type="submit">Generate Chart</button>
+        </form>
+
+        <!-- Buttons for restarting and downloading -->
+        <div class="buttons">
+            <button id="restart-btn" onclick="restartChart()">Restart Chart</button>
+            <!-- Separate form for downloading the chart -->
+            <form method="POST" action="/download_chart">
+                <input type="hidden" id="function" name="function">
+                <input type="hidden" id="start" name="start">
+                <input type="hidden" id="end" name="end">
+                <input type="hidden" id="color" name="color">
+                <input type="hidden" id="chart-title" name="chart_title">
+                <button id="download-btn" type="submit">Download Chart</button>
+            </form>
+        </div>
+
+        <!-- Iframe for displaying the chart -->
+        <iframe id="chart-frame" name="chart-frame"></iframe>
+    </div>
+
+    <script>
+        // Restart the chart by reloading the page
+        function restartChart() {
+            window.location.reload();
+        }
+
+        // Copy form data to the download form
+        const generateForm = document.querySelector('form[action="/generate_chart"]');
+        const downloadForm = document.querySelector('form[action="/download_chart"]');
+        generateForm.addEventListener('submit', () => {
+            const formData = new FormData(generateForm);
+            for (const [key, value] of formData.entries()) {
+                const input = downloadForm.querySelector(`input[name="${key}"]`);
+                if (input) {
+                    input.value = value;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
