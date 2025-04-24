@@ -5,6 +5,9 @@ Welcome to the B-C Chart Generator! This is a simple and elegant web app that le
 Features ✨
 
 -Generate Charts: Choose from sine, cosine, or tangent functions.
+
 -Customize: Set the range, color, and title of your chart.
+
 -Download: Save your chart as a PNG file.
+
 -Responsive Design: Works on any device—desktop, tablet, or mobile.
